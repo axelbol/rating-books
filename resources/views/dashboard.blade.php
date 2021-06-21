@@ -1,17 +1,30 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight uppercase">
+            {{ __('Books') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
+        <div class="container max-w-4xl mx-auto pb-10 flex flex-wrap">
+            @foreach ($books as $book)
+                <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-3 mb-4">
+                    <a href="{{ $book->url }}" target="_blank">
+                        <img src="{{ $book->cover_url }}" alt="cover" class="h-80 rounded-lg">
+                    </a>
+
+                    <livewire:rating :book="$book" :key="$book->id"></livewire:rating>
+
+                    <h2 class="text-xl py-3">
+                        <a href="{{ $book->url }}" target="_blank" class="text-gray-800 no-underline">
+                            {{ $book->title }}
+                        </a>
+                        <div class="text-sm">{{ $book->author }}, {{ $book->year }}</div>
+                    </h2>
+
+                    <p class="text-xs leading-normal">{{ $book->first_sentence }}...</p>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </x-app-layout>
